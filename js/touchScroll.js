@@ -11,10 +11,10 @@
 		winH = document.body.clientHeight;
 	function touchScroll(el,evt){
 		this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
-		var itemClass = this.evt.itemClass || '.item';
+		var itemClass = evt.itemClass || '.item';
 		this.current = 0;
 		this.direction =1;
-		this.item = this.wrapper.querySelectorAll(this.itemClass);
+		this.item = this.wrapper.querySelectorAll(itemClass);
 		this.len = this.item.length;
 		this.scrolling = false;
 		this.point={x:0,y:0,endX:0,endY:0}
