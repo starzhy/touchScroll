@@ -7,9 +7,11 @@
 	
 
 在页面中执行：
+
 new touchScroll(id,{
+
   start:function(scroll){
-    //触摸事件
+      //触摸事件
   },
   move:function(scroll){
     //移动
