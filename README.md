@@ -12,8 +12,8 @@ Eg: item-scale 实现缩放
   transform: scale(.2);
 }
 ``` 
-demo地址：http://appzhy.meitu.com/touchScroll
-手机打开，微信扫描二维码
+<p>demo地址：http://appzhy.meitu.com/touchScroll</p>
+<p>手机打开，微信扫描二维码</p>
 <p><img src="http://cli.clewm.net/qrcode/2015/02/03/1516108749.png?Tue%20Feb%2003%202015%2015:16:13%20GMT+0800%20(CST)" alt="" style="display:block">
 </p>
 
