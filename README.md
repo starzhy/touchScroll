@@ -5,6 +5,12 @@
 ``` html
 页面动画建议在end中通过修改每个item的class来实现不同效果
 Eg: item-scale 实现缩放
+.item-scale{
+  -webkit-transform: scale(.2);
+  -ms-transform: scale(.2);
+  -o-transform: scale(.2);
+  transform: scale(.2);
+}
 ```	
 demo地址：http://appzhy.meitu.com/scrollTouch
 

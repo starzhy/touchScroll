@@ -9,9 +9,6 @@
 body, html {
 	height: 100%;
 }
-*{
-	-webkit-backface-visibility:hidden;
-}
 body, ul, li, h1, h2, h3, img, p,div {
 	padding: 0;
 	margin: 0;
@@ -39,7 +36,10 @@ body {
 	max-width: 640px;
 	margin: 0 auto;
 
-
+	-webkit-backface-visibility:hidden;
+	-ms-backface-visibility:hidden;
+	-moz-backface-visibility:hidden;
+	backface-visibility:hidden;
 	/* Prevent native touch events on Windows */
 	-ms-touch-action: none;
 
@@ -60,7 +60,9 @@ body {
 	-o-text-size-adjust: none;
 	text-size-adjust: none;
 }
-.content{position: relative;width: 100%;
+.wrapper{
+	position: relative;
+	width: 100%;
 	-webkit-transition: -webkit-transform .5s;
 	-o-transition: transform .5s;
 	transition: transform .5s;
@@ -97,7 +99,7 @@ body {
 <body>
 
 <div id="container">
-	<div class="content" id="wrapper">
+	<div class="wrapper" id="wrapper">
 		<div class="item"></div>
 		<div class="item item2"></div>
 		<div class="item item3"></div>
