@@ -3,9 +3,10 @@
 广泛应用于微信朋友圈中的营销页
 
 ``` html
-页面动画建议在end中通过修改每个item的class来实现不同效果 <br/>
-	eg: item-scale 实现缩放
+页面动画建议在end中通过修改每个item的class来实现不同效果
+Eg: item-scale 实现缩放
 ```	
+# demo地址：http://appzhy.meitu.com/scrollTouch
 
 在页面中执行：
 ``` js
