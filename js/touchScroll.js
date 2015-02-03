@@ -12,11 +12,10 @@
 	function touchScroll(el,evt){
 		this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
 		var itemClass = evt.itemClass || '.item';
-		this.current = 0;
+		this.preCurrent = this.current = 0;
 		this.direction =1;
 		this.item = this.wrapper.querySelectorAll(itemClass);
 		this.len = this.item.length;
-		this.scrolling = false;
 		this.point={x:0,y:0,endX:0,endY:0}
 		this.evt = evt;
 		this.isLoop = evt.isLoop ? evt.isLoop : false;
@@ -40,26 +39,33 @@
 			this.point.y = this.point.endY = touches.pageY;
 			this.moved=false;
 			this.enabled=true;
+			console.log(0,this.point)
 			if(typeof this.evt.start == 'function') this.evt.start(this);
 		},
 		move:function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			
 			if(!this.enabled) return;
 			var touches = e.touches ? e.touches[0] : e,
 				diffX = parseInt(touches.pageX - this.point.x),
 				diffY = parseInt(touches.pageY - this.point.y);
+			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.enabled) return false;
 			this.point.endX = parseInt(touches.pageX);
 			this.point.endY = parseInt(touches.pageY);
-			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.enabled) return false;
+			console.log(1,this.point,diffY)
 			this.moveY(parseInt(-this.current*winH+diffY),0);
 			this.moved = true;
 			if(typeof this.evt.move == 'function') this.evt.move(this);
 		},
 		end:function(e){	
+			
 			var touches = e.touches ? e.touches[0] : e,
 				diffX = this.point.endX - this.point.x,
 				diffY = this.point.endY - this.point.y;
 			this.enabled = false;
-			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || this.scrolling || !this.moved) return false;
+			console.log(2,this.point,diffY,this.current,this.moved)
+			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.moved) return false;
 			
 			this.direction = diffY>0 ? -1 : 1;
 			if(Math.abs(diffY)<10){
@@ -70,11 +76,8 @@
 			this.current+= this.direction;
 			this.current = this.current>this.len-1 ? this.len-1 : this.current;
 			this.current = this.current<0 ? 0 : this.current;
-			this.scrolling = true;
 			var _self = this;
-			setTimeout(function(){
-				_self.scrolling = false;
-			},500);
+			
 			this.moveY(parseInt(-this.current*winH),.5);
 			if(typeof this.evt.end == 'function') this.evt.end(this);
 		},
