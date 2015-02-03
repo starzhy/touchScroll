@@ -12,7 +12,7 @@ Eg: item-scale 实现缩放
   transform: scale(.2);
 }
 ```	
-demo地址：http://appzhy.meitu.com/scrollTouch
+demo地址：http://appzhy.meitu.com/touchScroll
 
 在页面中执行：
 ``` js

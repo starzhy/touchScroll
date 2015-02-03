@@ -1,6 +1,6 @@
 /*
  * touchScroll  
- * param el,evt
+ * param:el,evt
  * evt传入 {start:function(){},move:function(){},end:function(){}}
 */
 
