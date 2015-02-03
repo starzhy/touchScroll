@@ -6,7 +6,7 @@
 页面动画建议在end中通过修改每个item的class来实现不同效果
 Eg: item-scale 实现缩放
 ```	
-# demo地址：http://appzhy.meitu.com/scrollTouch
+demo地址：http://appzhy.meitu.com/scrollTouch
 
 在页面中执行：
 ``` js
