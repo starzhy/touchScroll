@@ -39,13 +39,12 @@
 			this.point.y = this.point.endY = touches.pageY;
 			this.moved=false;
 			this.enabled=true;
-			console.log(0,this.point)
+			//console.log(0,this.point)
 			if(typeof this.evt.start == 'function') this.evt.start(this);
 		},
 		move:function(e){
 			e.preventDefault();
 			e.stopPropagation();
-			
 			if(!this.enabled) return;
 			var touches = e.touches ? e.touches[0] : e,
 				diffX = parseInt(touches.pageX - this.point.x),
@@ -53,20 +52,18 @@
 			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.enabled) return false;
 			this.point.endX = parseInt(touches.pageX);
 			this.point.endY = parseInt(touches.pageY);
-			console.log(1,this.point,diffY)
+			//console.log(1,this.point,diffY)
 			this.moveY(parseInt(-this.current*winH+diffY),0);
 			this.moved = true;
 			if(typeof this.evt.move == 'function') this.evt.move(this);
 		},
 		end:function(e){	
-			
 			var touches = e.touches ? e.touches[0] : e,
 				diffX = this.point.endX - this.point.x,
 				diffY = this.point.endY - this.point.y;
 			this.enabled = false;
-			console.log(2,this.point,diffY,this.current,this.moved)
+			//console.log(2,this.point,diffY,this.current,this.moved)
 			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.moved) return false;
-			
 			this.direction = diffY>0 ? -1 : 1;
 			if(Math.abs(diffY)<10){
 				this.moveY(parseInt(-this.current*winH),0);
@@ -76,8 +73,6 @@
 			this.current+= this.direction;
 			this.current = this.current>this.len-1 ? this.len-1 : this.current;
 			this.current = this.current<0 ? 0 : this.current;
-			var _self = this;
-			
 			this.moveY(parseInt(-this.current*winH),.5);
 			if(typeof this.evt.end == 'function') this.evt.end(this);
 		},
