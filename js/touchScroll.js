@@ -1,7 +1,7 @@
 /*
  * touchScroll  
  * param:el,evt
- * evt传入 {start:function(){},move:function(){},end:function(){}}
+ * evt:{start:function(){},move:function(){},end:function(){}}
 */
 
 (function(window,document,undefined){
@@ -9,6 +9,7 @@
 		hasPointer= navigator.msPointerEnabled,
 		winW = document.body.clientWidth,
 		winH = document.body.clientHeight;
+		
 	function touchScroll(el,evt){
 		this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
 		var itemClass = evt.itemClass || '.item';
@@ -26,7 +27,8 @@
 		init:function(){
 			winW = document.body.clientWidth,
 			winH = document.body.clientHeight;
-			this.wrapper.style.height = this.len*winH+'px'
+			this.wrapper.style.height = this.len*winH+'px';
+			this.item.item(this.current).classList.add('current');
 			Array.prototype.forEach.call(this.item,function(el){
 				el.style.height=winH+'px';
 			});
@@ -74,6 +76,10 @@
 			this.current = this.current>this.len-1 ? this.len-1 : this.current;
 			this.current = this.current<0 ? 0 : this.current;
 			this.moveY(parseInt(-this.current*winH),.5);
+			Array.prototype.forEach.call(this.item,function(item){
+				item.classList.remove('current');
+			});
+			this.item.item(this.current).classList.add('current');
 			if(typeof this.evt.end == 'function') this.evt.end(this);
 		},
 		transitionEnd:function(){
