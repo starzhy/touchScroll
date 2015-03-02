@@ -39,15 +39,13 @@
 			var touches = e.touches ? e.touches[0] : e;
 			this.point.x = this.point.endX = touches.pageX;
 			this.point.y = this.point.endY = touches.pageY;
-			this.moved=false;
-			this.enabled=true;
-			//console.log(0,this.point)
+			this.enabled=true;//用于维持012顺序，快速拖动时有可能会出现012102，012之后再次触发1时 this.moveY(parseInt(-this.current*winH+diffY),0) 导致快速跳到下一张而没有动画效果 。
+			console.log(0,this.point);
 			if(typeof this.evt.start == 'function') this.evt.start(this);
 		},
 		move:function(e){
 			e.preventDefault();
 			e.stopPropagation();
-			if(!this.enabled) return;
 			var touches = e.touches ? e.touches[0] : e,
 				diffX = parseInt(touches.pageX - this.point.x),
 				diffY = parseInt(touches.pageY - this.point.y);
@@ -56,7 +54,6 @@
 			this.point.endY = parseInt(touches.pageY);
 			//console.log(1,this.point,diffY)
 			this.moveY(parseInt(-this.current*winH+diffY),0);
-			this.moved = true;
 			if(typeof this.evt.move == 'function') this.evt.move(this);
 		},
 		end:function(e){	
@@ -64,8 +61,8 @@
 				diffX = this.point.endX - this.point.x,
 				diffY = this.point.endY - this.point.y;
 			this.enabled = false;
-			//console.log(2,this.point,diffY,this.current,this.moved)
-			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) || !this.moved) return false;
+			//console.log(2,this.point,diffY,this.current)
+			if((this.current>= this.len-1 && diffY<0) || (this.current==0 && diffY>0) ) return false;//|| !this.moved
 			this.direction = diffY>0 ? -1 : 1;
 			if(Math.abs(diffY)<10){
 				this.moveY(parseInt(-this.current*winH),0);
@@ -174,5 +171,34 @@
 		}
 	}
 	window.touchScroll = touchScroll;
+
+	/*寄放tap方法*/
+	window.onTab = function(el,callback){
+		el = typeof el =='string' ? document.getElementById(el) : el;
+		if(!hasTouch){
+			el.onclick = callback;
+		}else{
+			var startX,startY;
+			el.addEventListener('touchstart',function(e){
+				e.preventDefault();
+				e.stopPropagation();
+	            var touches = e.touches ? e.touches[0] : e;
+				startX = touches.pageX;
+				startY = touches.pageY;
+	        });
+	        el.addEventListener('touchend',function(e){
+	        	e.preventDefault();
+				e.stopPropagation();
+	            var touches = e.changedTouches[0],
+				    diffX = touches.clientX - startX,
+				    diffY = touches.clientY - startY;
+				  if( Math.abs(diffX) < 6 && Math.abs(diffY) < 6 ){  //6只是某些设备，手指按下跟松开 值有误差，so >6 判断为swipe
+				     el.addEventListener('tap',callback);
+				     callback();
+				  }
+				  return false;
+	        });
+		}
+	}
 })(window,document);
 

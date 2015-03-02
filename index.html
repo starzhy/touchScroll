@@ -93,6 +93,8 @@ body {
 	-o-transform: scale(.2);
 	transform: scale(.2);
 }
+.icon-music-tip{width:1.1rem;height: 1.3rem;background-position: -6.1rem -7.5rem;left:-.3rem;top:.1rem;display: none;}
+
 </style>
 
 </head>
@@ -100,7 +102,10 @@ body {
 
 <div id="container">
 	<div class="wrapper" id="wrapper">
-		<div class="item"></div>
+		<div class="item">
+			<span id="touchTest" style="width:100px;height:50px;background:red;position:absolute;right:0;top:0">
+			</span>
+		</div>
 		<div class="item item2"></div>
 		<div class="item item3"></div>
 		<div class="item item4"></div>
@@ -121,7 +126,10 @@ body {
  			$current.classList.remove('item-scale')
  		},500);
  	}
- })
+ });
+ // onTab('touchTest',function(){
+ // 	console.log('tap fire')
+ // })
 
 </script>
 </body>
