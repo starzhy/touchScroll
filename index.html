@@ -18,80 +18,42 @@ body, ul, li, h1, h2, h3, img, p,div {
 
 body {
 	/* On modern browsers, prevent the whole page to bounce */
-	overflow: hidden;
 	background-color: #333;
 	font-size: 12px;
 }
 
 #container {
-	position: absolute;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	overflow: hidden;
-	max-width: 640px;
-	margin: 0 auto;
-
-	-webkit-backface-visibility:hidden;
-	-ms-backface-visibility:hidden;
-	-moz-backface-visibility:hidden;
-	backface-visibility:hidden;
-	/* Prevent native touch events on Windows */
-	-ms-touch-action: none;
-
-	/* Prevent the callout on tap-hold and text selection */
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-
-	/* Prevent elements to be highlighted on tap */
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-
-	/* Prevent text resize on orientation change, useful for web-apps */
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
+	width:100%;height: 100%;overflow: hidden;
 }
 .wrapper{
-	position: relative;
+	position: absolute;
+	top:0;
+	left:0;
 	width: 100%;
-	-webkit-transition: -webkit-transform .5s;
-	-o-transition: transform .5s;
-	transition: transform .5s;
+	-webkit-transition: -webkit-transform .6s;
+	transition: transform .6s;
 }
 .item{position: relative;width: 100%;height:600px;text-align: center;overflow: hidden;background-size: 100% auto;background-image: url(images/1.jpg);background-position: 50% 0;background-repeat:no-repeat;background-color: #211716;overflow: hidden;
-	-webkit-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	-webkit-transition: -webkit-transform .5s;
-	-o-transition: transform .5s;
-	transition: transform .5s;
+	-webkit-transition: all .5s;
+	-webkit-transform-style: preserve-3d;
+	-webkit-perspective:200px;
 	-webkit-transform-origin: 50% 100%;
-	-moz-transform-origin: 50% 100%;
-	-ms-transform-origin: 50% 100%;
-	-o-transform-origin: 50% 100%;
-	transform-origin: 50% 100%;
 	
 }
+/*.item1{background-image: url(images/1.jpg);}
 .item2{background-image: url(images/2.jpg);}
 .item3{background-image: url(images/3.jpg);}
 .item4{background-image: url(images/4.jpg);}
 .item5{background-image: url(images/5.jpg);}
-.item6{background-image: url(images/6.jpg);}
+.item6{background-image: url(images/6.jpg);}*/
+.item1{background-image: url(images/stage11.jpg);background-color: #312B5A}
+.item2{background-image: url(images/stage21.jpg);background-color:#3E90ED }
+.item3{background-image: url(images/stage31.jpg);background-color: #34DACF}
+.item4{background-image: url(images/stage41.jpg);background-color: #B057F5}
+.item5{background-image: url(images/stage51.jpg);background-color:#FF6566 }
+.item6{background-image: url(images/stage61.jpg);background-color:#FF5B8D }
 .item-scale{
-	-webkit-transform: scale(.2);
-	-ms-transform: scale(.2);
-	-o-transform: scale(.2);
-	transform: scale(.2);
+	/*-webkit-transform: rotateX(-90deg) skew(-2deg) translateX(-1px);*/
 }
 .icon-music-tip{width:1.1rem;height: 1.3rem;background-position: -6.1rem -7.5rem;left:-.3rem;top:.1rem;display: none;}
 
@@ -102,10 +64,7 @@ body {
 
 <div id="container">
 	<div class="wrapper" id="wrapper">
-		<div class="item">
-			<span id="touchTest" style="width:100px;height:50px;background:red;position:absolute;right:0;top:0">
-			</span>
-		</div>
+		<div class="item item1"></div>
 		<div class="item item2"></div>
 		<div class="item item3"></div>
 		<div class="item item4"></div>
@@ -113,18 +72,18 @@ body {
 		<div class="item item6"></div>
 	</div>
 </div>
-<script type="text/javascript" src="js/touchScroll.js?7"></script>
+<script type="text/javascript" src="js/touchScroll.js?9"></script>
 <script type="text/javascript">
  new touchScroll('#wrapper',{
  	start:function(){
 
  	},
  	end:function(scroll){
- 		var $current = document.querySelectorAll('.item').item(scroll.preCurrent);
- 		$current.classList.add('item-scale');
- 		setTimeout(function(){
- 			$current.classList.remove('item-scale')
- 		},500);
+ 		// var $current = document.querySelectorAll('.item').item(scroll.preCurrent);
+ 		// $current.classList.add('item-scale');
+ 		// setTimeout(function(){
+ 		// 	$current.classList.remove('item-scale')
+ 		// },600);
  	}
  });
  // onTab('touchTest',function(){

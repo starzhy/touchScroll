@@ -40,7 +40,8 @@
 			this.point.x = this.point.endX = touches.pageX;
 			this.point.y = this.point.endY = touches.pageY;
 			this.enabled=true;//用于维持012顺序，快速拖动时有可能会出现012102，012之后再次触发1时 this.moveY(parseInt(-this.current*winH+diffY),0) 导致快速跳到下一张而没有动画效果 。
-			console.log(0,this.point);
+			this.flagDir = true;
+			//console.log(0,this.point);
 			if(typeof this.evt.start == 'function') this.evt.start(this);
 		},
 		move:function(e){
@@ -53,7 +54,13 @@
 			this.point.endX = parseInt(touches.pageX);
 			this.point.endY = parseInt(touches.pageY);
 			//console.log(1,this.point,diffY)
-			this.moveY(parseInt(-this.current*winH+diffY),0);
+			//this.moveY(parseInt(-this.current*winH+diffY),0);
+			if(this.flagDir){
+				var trsOrigin = diffY>0 ? '50% 0%' : '50% 100%';
+				this.item.item(this.current).style.webkitTransformOrigin = trsOrigin;
+				this.flagDir =false;
+			}
+			
 			if(typeof this.evt.move == 'function') this.evt.move(this);
 		},
 		end:function(e){	
@@ -69,10 +76,11 @@
 				return false;
 			}
 			this.preCurrent = this.current;
+			var prev = this.current;
 			this.current+= this.direction;
 			this.current = this.current>this.len-1 ? this.len-1 : this.current;
 			this.current = this.current<0 ? 0 : this.current;
-			this.moveY(parseInt(-this.current*winH),.5);
+			this.moveY(parseInt(-this.current*winH),.5,prev);
 			Array.prototype.forEach.call(this.item,function(item){
 				item.classList.remove('current');
 			});
@@ -85,10 +93,12 @@
 		resize:function(){
 			this.init();
 		},
-		moveY:function(y,t){
+		moveY:function(y,t,prev){ //新增参数prev, current的上个元素
 			var timer = t || 0;
+			
+			//this.wrapper.style.webkitTransition = t+'s';
+			
 			this.wrapper.style.webkitTransform = 'translate3D(0,'+y+'px,0)';
-			this.wrapper.style.webkitTransition = t+'s';
 		},
 		handleEvent: function (e) {
 			switch ( e.type ) {

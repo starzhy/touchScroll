@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>touchScroll</title>
+
+<style>
+body, html {
+    height: 100%;
+}
+body, ul, li, h1, h2, h3, img, p,div {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    list-style: none;
+}
+
+body {
+    /* On modern browsers, prevent the whole page to bounce */
+    overflow: hidden;
+    background-color: #333;
+    font-size: 12px;
+}
+
+#container {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    max-width: 640px;
+    margin: 0 auto;
+
+    -webkit-backface-visibility:hidden;
+    -ms-backface-visibility:hidden;
+    -moz-backface-visibility:hidden;
+    backface-visibility:hidden;
+    /* Prevent native touch events on Windows */
+    -ms-touch-action: none;
+
+    /* Prevent the callout on tap-hold and text selection */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* Prevent elements to be highlighted on tap */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    /* Prevent text resize on orientation change, useful for web-apps */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+}
+.wrapper{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    -webkit-transition: -webkit-transform .6s;
+    transition: transform .6s;
+}
+.item{position: relative;width: 100%;height:800px;text-align: center;overflow: hidden;background-size: 100% auto;background-image: url(images/stage1.png);background-position: 50% 0;background-repeat:no-repeat;background-color: #211716;
+    -webkit-transition: all .5s;
+    -webkit-transform-style: preserve-3d;
+    -webkit-perspective:200px;
+    -webkit-transform-origin: 50% 100%;
+    
+}
+.item1{background-image: url(images/stage1.jpg?1);}
+.item2{background-image: url(images/stage2.jpg?1);}
+.item3{background-image: url(images/stage3.jpg?1);}
+.item4{background-image: url(images/stage4.jpg?1);}
+.item5{background-image: url(images/stage5.jpg?1);}
+.item6{background-image: url(images/stage6.jpg?1);}
+/*.item1{background-image: url(images/1.jpg);}
+.item2{background-image: url(images/2.jpg);}
+.item3{background-image: url(images/3.jpg);}
+.item4{background-image: url(images/4.jpg);}
+.item5{background-image: url(images/5.jpg);}
+.item6{background-image: url(images/6.jpg);}*/
+.item-scale{
+    /*-webkit-transform:scale(.2);*/
+    
+}
+.icon-music-tip{width:1.1rem;height: 1.3rem;background-position: -6.1rem -7.5rem;left:-.3rem;top:.1rem;display: none;}
+
+</style>
+
+</head>
+<body>
+
+<div id="container">
+    <div class="wrapper" id="wrapper">
+        <div class="item">
+        </div>
+        <div class="item item2"></div>
+        <div class="item item3"></div>
+        <div class="item item4"></div>
+        <div class="item item5"></div>
+        <div class="item item6"></div>
+    </div>
+</div>
+<script src="http://appzhy.meitu.com/2015hitback/js/zepto.min.js"></script>
+<script type="text/javascript">
+
+$(window).on('touchmove MSPointerMove pointermove',function(e){
+    e.preventDefault();
+});
+function touchScroll(el,evt){
+    this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
+    var itemClass = evt.itemClass || '.item';
+    var current=0;
+    this.direction =1;
+    this.item = this.wrapper.querySelectorAll(itemClass);
+    len = this.len = this.item.length;
+    this.point={x:0,y:0,endX:0,endY:0}
+    this.evt = evt;
+    this.isLoop = evt.isLoop ? evt.isLoop : false;
+
+    var winW = document.body.clientWidth,
+        winH = document.body.clientHeight;
+    $('#container').css('height',winH+'px')
+    this.wrapper.style.height = this.len*winH+'px';
+    this.wrapper.style.width=winW+'px';
+    this.item.item(this.current).classList.add('current');
+    Array.prototype.forEach.call(this.item,function(el){
+        el.style.height=winH+'px';
+        el.style.width=winW+'px';
+    });
+    $(el).swipeUp(function(){
+        current++;
+        current = current >len-1 ? (len-1 ): current;
+        var y = -current*winH
+        this.style.webkitTransform = 'translateY('+y+'px)';
+    })
+    $(el).swipeDown(function(){
+        current--;
+        current = current <0 ? 0: current;
+        var y = -current*winH
+        this.style.webkitTransform = 'translateY('+y+'px)';
+    })
+}
+touchScroll('#wrapper',{});
+
+ // onTab('touchTest',function(){
+ //     console.log('tap fire')
+ // })
+
+</script>
+</body>
+</html>
